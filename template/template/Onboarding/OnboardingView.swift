@@ -33,32 +33,54 @@ struct OnboardingView: View {
     
     var body: some View {
         VStack {
-            Text("Welcome to \(appName)")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.vertical, 50)
-                .multilineTextAlignment(.center)
+            // App Icon Placeholder - Add your app icon here
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.3))
+                .frame(width: 100, height: 100)
+                .overlay(
+                    Image(systemName: "app.fill")
+                        .font(.system(size: 50))
+                        .foregroundColor(.gray)
+                )
+                .padding(.top, 60)
+                .padding(.bottom, 40)
+            
+            // Welcome Text
+            VStack(spacing: 8) {
+                Text("Welcome to")
+                    .font(.title2)
+                    .foregroundColor(.black.opacity(0.8))
+                    .fontWeight(.medium)
+                
+                Text(appName)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+            }
+            .padding(.bottom, 50)
+            
             Spacer()
+            
+            // Features List
             VStack {
                 ForEach(features) { feature in
                     VStack(alignment: .leading) {
-                        HStack {
+                        HStack(alignment: .top, spacing: 0) {
                             if let icon = feature.icon {
                                 Image(systemName: icon)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 45, alignment: .center)
-                                    .clipped()
+                                    .font(.system(size: 30))
+                                    .frame(width: 45, height: 45, alignment: .center)
                                     .foregroundColor(color ?? Color.blue)
                                     .padding(.trailing, 15)
-                                    .padding(.vertical, 10)
                             }
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text(feature.title)
                                     .fontWeight(.bold)
                                     .font(.system(size: 16))
                                 Text(feature.description)
                                     .font(.system(size: 15))
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
                             }
                             Spacer()
                         }
@@ -68,20 +90,29 @@ struct OnboardingView: View {
                 }
             }
             .padding(.bottom, 30)
+            
             Spacer()
+            
+            // Get Started Button
             VStack {
                 Button(action: {
                     dismiss()
                 }) {
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(color ?? Color.blue)
-                            .cornerRadius(12)
-                            .frame(height: 54)
-                        Text("Continue")
+                    HStack(spacing: 8) {
+                        Text("Get Started")
                             .fontWeight(.bold)
                             .foregroundColor(.white)
+                        
+                        Image(systemName: "arrow.right")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
                     }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 54)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(color ?? Color.blue)
+                    )
                 }
             }
             .padding(.top, 15)
@@ -90,4 +121,17 @@ struct OnboardingView: View {
         }
         .padding()
     }
+}
+
+#Preview {
+    OnboardingView(
+        appName: "Template App",
+        features: [
+            Feature(title: "Professional Paywall", description: "Ready-to-use in-app purchase system with StoreKit integration", icon: "creditcard"),
+            Feature(title: "Beautiful Onboarding", description: "Customizable welcome experience for your users", icon: "hand.wave"),
+            Feature(title: "Easy Customization", description: "Simple template structure for quick app development", icon: "paintbrush"),
+            Feature(title: "Production Ready", description: "Built following Apple's guidelines and best practices", icon: "checkmark.shield")
+        ],
+        color: .blue
+    )
 }
