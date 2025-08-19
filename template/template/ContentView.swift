@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // Background
-            Color.black.ignoresSafeArea()
+            Color.white.ignoresSafeArea()
             
             if showOnboarding {
                 // Onboarding View
@@ -43,10 +43,10 @@ struct ContentView: View {
                     
                     Text("Welcome to Your App!")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                     
                     Text("This is where your main app content would go")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black.opacity(0.7))
                         .multilineTextAlignment(.center)
                     
                     VStack(spacing: 15) {
